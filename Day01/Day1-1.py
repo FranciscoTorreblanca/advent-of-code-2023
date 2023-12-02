@@ -1,4 +1,7 @@
-input_file = open("input.txt", "r")
+import os
+
+input_path = os.path.join(os.path.dirname(__file__), "input.txt")
+input_file = open(input_path, "r")
 file_lines = input_file.readlines()
 result = 0
 

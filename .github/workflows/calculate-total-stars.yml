@@ -19,6 +19,8 @@ jobs:
                   cat $stars_file | jq --indent 4 ".total = $total_stars" > $tmp && mv $tmp $stars_file
             - name: Commit changes
               run: |
+                  git config --global user.name "GitHub Action"
+                  git config --global user.email "action@github.com"
                   git add stars.json
                   git commit -m "Update stars.json"
                   git push

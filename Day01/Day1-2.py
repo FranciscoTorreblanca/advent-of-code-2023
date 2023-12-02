@@ -26,7 +26,9 @@ for line in file_lines:
         next_start = matched_digit.start() + 1
         line = line[next_start:]
         matched_digit = re.search(RE_PATTERN, line)
-    digits = [replace_dict[digit] if digit in replace_dict else digit for digit in digits]
+    digits = [
+        replace_dict[digit] if digit in replace_dict else digit for digit in digits
+    ]
     result = result + int(digits[0] + digits[-1])
 
 print("result", result)

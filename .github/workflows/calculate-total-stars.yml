@@ -1,0 +1,24 @@
+name: GitHub Actions Demo
+
+on:
+    push:
+        # paths:
+        #     - "stars.js"
+
+jobs:
+    calculate-stars:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Update stars.json with new total stars
+              run: |
+                  stars_file="stars.json"
+                  tmp=$(mktemp)
+                  total_stars=0
+                  cat $stars_file | jq -r '.days | values[]' | while read -r value; do total_stars=`expr $total_stars + $value`; done
+                  cat $stars_file | jq '.total = total_stars' > $tmp && mv $tmp $stars_file
+            - name: Commit changes
+              run: |
+                  git add stars.json
+                  git commit -m "Update stars.json"
+                  git push

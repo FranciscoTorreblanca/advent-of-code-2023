@@ -15,3 +15,4 @@ Take a look at <https://adventofcode.com/>
  Day | Challenge Name | Stars |
  :-:| :-: | :-: |
  01 | [Trebuchet?](Day01) | ⭐️⭐️ |
+ 02 | [Cube Conundrum?](Day02) | ⭐️⭐️ |

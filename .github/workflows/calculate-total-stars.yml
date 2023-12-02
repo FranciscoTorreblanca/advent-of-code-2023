@@ -14,7 +14,7 @@ jobs:
               run: |
                   stars_file="stars.json"
                   tmp=$(mktemp)
-                  cat $stars_file | jq -r '.days | values[]' | while read value; do (( total_stars+=value )); done
+                  total_stars=$(cat $stars_file | jq -r '.days | flatten | add')
                   cat $stars_file | jq --indent 4 ".total = $total_stars" > $tmp && mv $tmp $stars_file
             - name: Commit changes
               run: |

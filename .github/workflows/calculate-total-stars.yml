@@ -3,7 +3,7 @@ name: GitHub Action to calculate total stars
 on:
     push:
         paths:
-            - "stars.js"
+            - "stars.json"
 
 jobs:
     calculate-stars:

@@ -2,8 +2,8 @@ name: GitHub Action to calculate total stars
 
 on:
     push:
-        # paths:
-        #     - "stars.js"
+        paths:
+            - "stars.js"
 
 jobs:
     calculate-stars:

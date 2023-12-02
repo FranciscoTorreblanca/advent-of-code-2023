@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: GitHub Action to calculate total stars
 
 on:
     push:
@@ -16,7 +16,7 @@ jobs:
                   tmp=$(mktemp)
                   total_stars=0
                   cat $stars_file | jq -r '.days | values[]' | while read -r value; do total_stars=`expr $total_stars + $value`; done
-                  cat $stars_file | jq '.total = total_stars' > $tmp && mv $tmp $stars_file
+                  cat $stars_file | jq --indent 4 ".total = $total_stars" > $tmp && mv $tmp $stars_file
             - name: Commit changes
               run: |
                   git add stars.json

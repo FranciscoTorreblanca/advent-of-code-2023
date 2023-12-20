@@ -18,3 +18,4 @@ Day | Challenge Name | Stars |
 02 | [Cube Conundrum](Day02) | ⭐️⭐️ |
 03 | [Gear Ratios](Day03) | ⭐️⭐️ |
 04 | [Scratchcards](Day04) | ⭐️⭐️ |
+05 | [If You Give A Seed A Fertilizer](Day05) | ⭐️ |

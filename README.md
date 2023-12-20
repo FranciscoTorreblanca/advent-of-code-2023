@@ -17,4 +17,4 @@ Day | Challenge Name | Stars |
 01 | [Trebuchet?](Day01) | ⭐️⭐️ |
 02 | [Cube Conundrum](Day02) | ⭐️⭐️ |
 03 | [Gear Ratios](Day03) | ⭐️⭐️ |
-04 | [Scratchcards](Day04) | ⭐️ |
+04 | [Scratchcards](Day04) | ⭐️⭐️ |

@@ -18,10 +18,12 @@ jobs:
                   tmp=$(mktemp)
                   total_stars=$(cat $stars_file | jq -r '.days | flatten | add')
                   cat $stars_file | jq --indent 4 ".total = $total_stars" > $tmp && mv $tmp $stars_file
+            - name: Update README.md stars' table
+              run: scripts/update_readme_stars_table.sh
             - name: Commit changes
               run: |
                   git config --global user.name "GitHub Actions"
                   git config --global user.email "actions@github.com"
-                  if git commit -am "Update stars.json"; then
+                  if git commit -am "Update stars progress"; then
                     git push
                   fi

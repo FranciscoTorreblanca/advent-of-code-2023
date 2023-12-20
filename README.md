@@ -12,7 +12,8 @@ Take a look at <https://adventofcode.com/>
 
 ## Table of challenges
 
- Day | Challenge Name | Stars |
- :-:| :-: | :-: |
- 01 | [Trebuchet?](Day01) | ⭐️⭐️ |
- 02 | [Cube Conundrum?](Day02) | ⭐️⭐️ |
+Day | Challenge Name | Stars |
+:-:| :-: | :-: |
+01 | [Trebuchet?](Day01) | ⭐️⭐️ |
+02 | [Cube Conundrum](Day02) | ⭐️⭐️ |
+03 | [Gear Ratios](Day03) | ⭐️ |

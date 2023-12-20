@@ -3,13 +3,15 @@ name: GitHub Action to calculate total stars
 on:
     push:
         paths:
-            - "stars.json"
+            - "**.py"
 
 jobs:
     calculate-stars:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
+            - name: Check and update days' stars
+              run: scripts/check_stars_progress.sh
             - name: Update stars.json with new total stars
               run: |
                   stars_file="stars.json"
@@ -18,8 +20,8 @@ jobs:
                   cat $stars_file | jq --indent 4 ".total = $total_stars" > $tmp && mv $tmp $stars_file
             - name: Commit changes
               run: |
-                  git config --global user.name "GitHub Action"
-                  git config --global user.email "action@github.com"
-                  git add stars.json
-                  git commit -m "Update stars.json"
-                  git push
+                  git config --global user.name "GitHub Actions"
+                  git config --global user.email "actions@github.com"
+                  if git commit -am "Update stars.json"; then
+                    git push
+                  fi

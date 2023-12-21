@@ -15,23 +15,12 @@ class dict_range(UserDict):
                 return dest_start + key - source_start
         return key
 
-class list_range(UserList):
-    def __init__(self, ranges=None):
-        self.ranges = ranges or []
-    
-    def set_range(self, start, range_len):
-        self.ranges.append((start, range_len))
-
-    def __iter__ (self):
-        for start, range_len in self.ranges:
-            for i in range(start, start + range_len):
-                yield i
     
 input_path = os.path.join(os.path.dirname(__file__), "input.txt")
 input_file = open(input_path, "r")
 file_lines = input_file.readlines()
 
-seeds_list = list_range()
+seeds_list = []
 seeds_to_soil = dict_range()
 soil_to_fertilizer = dict_range()
 fertilizer_to_water = dict_range()
@@ -47,7 +36,7 @@ for line in file_lines:
     if line.startswith("seeds"):
         for match in re.finditer(r"\d+ \d+", line):
             initial_seed, seed_range = match.group().split(" ")
-            seeds_list.set_range(int(initial_seed), int(seed_range))
+            seeds_list.append((int(initial_seed), int(seed_range)))
         continue
 
     if line.startswith("seed"):
@@ -75,17 +64,65 @@ for line in file_lines:
     dest_start, source_start, range_len = line.strip().split(" ")
     mapping_dict.set_range(int(source_start), int(dest_start), int(range_len))
 
-locations_list = []
-for seed in seeds_list:
-    print(seed)
-    soil = seeds_to_soil[seed]
-    fertilizer = soil_to_fertilizer[soil]
-    water = fertilizer_to_water[fertilizer]
-    light = water_to_light[water]
-    temperature = light_to_temperature[light]
-    humidity = temperature_to_humidity[temperature]
-    location = humidity_to_location[humidity]
-    locations_list.append(location)
+def complete_ranges(target_mapping):
+    target_mapping.ranges.sort(key=lambda x: x[0])
+    start = 0
+    for target_dest_start, _, target_range_len in target_mapping.ranges:
+        if target_dest_start > start:
+            target_mapping.ranges.append((start, start, target_dest_start - start))
+        start = target_dest_start + target_range_len
+    target_mapping.ranges.sort(key=lambda x: x[0])
 
-locations_list.sort()
-print(locations_list[0])
+complete_ranges(seeds_to_soil)
+complete_ranges(soil_to_fertilizer)
+complete_ranges(fertilizer_to_water)
+complete_ranges(water_to_light)
+complete_ranges(light_to_temperature)
+complete_ranges(temperature_to_humidity)
+complete_ranges(humidity_to_location)
+
+def inverse_mapping(original_mapping):
+    inversed_mapping = dict_range()
+    for dest_start, source_start, range_len in original_mapping.ranges:
+        inversed_mapping.set_range(source_start, dest_start, range_len)
+    # Sort by source start
+    inversed_mapping.ranges.sort(key=lambda x: x[1])
+    return inversed_mapping
+
+soil_to_seeds = inverse_mapping(seeds_to_soil)
+fertilizer_to_soil = inverse_mapping(soil_to_fertilizer)
+water_to_fertilizer = inverse_mapping(fertilizer_to_water)
+light_to_water = inverse_mapping(water_to_light)
+temperature_to_light = inverse_mapping(light_to_temperature)
+humidity_to_temperature = inverse_mapping(temperature_to_humidity)
+location_to_humidity = inverse_mapping(humidity_to_location)
+
+print(soil_to_seeds.ranges)
+print(fertilizer_to_soil.ranges)
+print(water_to_fertilizer.ranges)
+print(light_to_water.ranges)
+print(temperature_to_light.ranges)
+print(humidity_to_temperature.ranges)
+print(location_to_humidity.ranges)
+
+
+end_loop = False
+for location_start, humidity_start, range_len in humidity_to_location.ranges:
+    for location in range(location_start, location_start + range_len):
+        humidity = location_to_humidity[location]
+        temperature = humidity_to_temperature[humidity]
+        light = temperature_to_light[temperature]
+        water = light_to_water[light]
+        fertilizer = water_to_fertilizer[water]
+        soil = fertilizer_to_soil[fertilizer]
+        seed = soil_to_seeds[soil]
+        for seed_start, seed_range in seeds_list:
+            if seed_start <= seed < seed_start + seed_range:
+                print("seed:", seed)
+                print("location:", location)
+                end_loop = True
+                break
+        if end_loop:
+            break
+    if end_loop:
+        break

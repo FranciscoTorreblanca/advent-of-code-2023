@@ -97,16 +97,8 @@ temperature_to_light = inverse_mapping(light_to_temperature)
 humidity_to_temperature = inverse_mapping(temperature_to_humidity)
 location_to_humidity = inverse_mapping(humidity_to_location)
 
-print(soil_to_seeds.ranges)
-print(fertilizer_to_soil.ranges)
-print(water_to_fertilizer.ranges)
-print(light_to_water.ranges)
-print(temperature_to_light.ranges)
-print(humidity_to_temperature.ranges)
-print(location_to_humidity.ranges)
-
-
 end_loop = False
+# It works after some time, but not in an efficient way heheh
 for location_start, humidity_start, range_len in humidity_to_location.ranges:
     for location in range(location_start, location_start + range_len):
         humidity = location_to_humidity[location]

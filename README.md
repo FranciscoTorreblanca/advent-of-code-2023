@@ -20,3 +20,4 @@ Day | Challenge Name | Stars |
 04 | [Scratchcards](Day04) | ⭐️⭐️ |
 05 | [If You Give A Seed A Fertilizer](Day05) | ⭐️⭐️ |
 06 | [Wait For It](Day06) | ⭐️⭐️ |
+07 | [Camel Cards](Day07) | ⭐️ |
